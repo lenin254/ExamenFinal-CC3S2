@@ -189,6 +189,7 @@ Ejecuta el servidor para mostrar que todo este bien.
 5. **Ejecutar las Pruebas:**
    - Ejecutamos las pruebas con `bundle exec rspec`.
    - Asegúrate de que todas las pruebas pasen antes de continuar con la implementación adicional.
-![En este caso no agregmos ejemplos](/imagenes/14.png)  
+![](/imagenes/14.png)  
+*En este caso no agregmos ejemplos*
 ### Paso 2: Lograr que se apruebe la primera especificación
 
