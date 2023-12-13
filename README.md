@@ -210,4 +210,4 @@ Rottenpotatoes::Application.routes.draw do
   end
 ```
 Y ejecutamos pruebas.
-### Paso 3: Más comportamientos de controlador (3 puntos)
+### Paso 3: Más comportamientos de controlador 
