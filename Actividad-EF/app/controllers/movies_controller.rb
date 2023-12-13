@@ -67,5 +67,16 @@ class MoviesController < ApplicationController
     def sort_by
       params[:sort_by] || session[:sort_by] || 'id'
     end
+    private
+    def movie_params
+      params.require(:movie).permit(:title, :release_year, :language)
+      # Asegúrese de reemplazar :title, :release_year, :language con los atributos reales de su modelo Movie
+    end
+
+    def search_tmdb
+      @search_results = Movie.search_tmdb(params[:search_terms])
+      # Selecciona la plantilla de vista correcta para renderizar
+      render 'search_tmdb_results'
+    end
   end
   

@@ -106,7 +106,7 @@ $("#onSubmit").click(function() {
 })
 ```
 5. ¿Cuándo deberías utilizar la metaprogramación basada en eval en lugar de la metaprogramación basada en bloques?.
-
+Es preferible usar la metaprogramación basada en bloques siempre que sea posible debido a sus ventajas en términos de seguridad y legibilidad. Sin embargo, puede haber casos en los que necesites la flexibilidad adicional que ofrece eval. En esos casos, debemos asegúrarnos de manejar el código con cuidado para evitar problemas de seguridad.
 
 ## Parte 2. Pruebas
 Agregamos las gemas mencionadas al `gemfile` y volvemos a mandar el `bundle install`  
@@ -121,3 +121,74 @@ Ejecuta el servidor para mostrar que todo este bien.
 ![](/imagenes/10.png)  
 
 ### Paso 1: Escribiendo una nueva vista
+
+1. **Actualizar la vista `search_tmdb.html.erb`:**
+   - Agregamos a la vista 
+   ``` 
+    <%= form_tag search_tmdb_path, method: :get, id: 'tmdb_form' do %>
+        <%= label_tag :query, "Search for:" %>
+        <%= text_field_tag :query, params[:query] %>
+        <%= submit_tag 'Search TMDb', name: nil %>
+    <% end %>
+
+    <%= link_to 'Back to Home', movies_path %>
+   ```
+
+2. **Controlador: `MoviesController` - Método `search_tmdb`:**
+   - Creamos el método `search_tmdb` en `MoviesController` para manejar la búsqueda en TMDb. Este método debe llamar a un método del modelo para realizar la búsqueda y luego renderizar la plantilla de vista correcta.
+
+   ```ruby
+   class MoviesController < ApplicationController
+     def search_tmdb
+       @search_results = Movie.search_tmdb(params[:search_terms])
+       # Selecciona la plantilla de vista correcta para renderizar
+       render 'search_tmdb_results'
+     end
+   end
+   ```
+![](/imagenes/11.png)
+
+3. **Vista `search_tmdb_results.html.erb`:**
+   - Creamos una nueva vista llamada `search_tmdb_results.html.erb` en el directorio `app/views/movies/`. Esta vista debería mostrar los resultados de la búsqueda en TMDb. 
+
+   ```html
+   <!-- Muestra los resultados de la búsqueda aquí -->
+   <% @search_results.each do |result| %>
+     <!-- Mostrar información relevante de cada resultado -->
+   <% end %>
+   ```
+![](/imagenes/12.png)
+
+4. **Especificaciones en `movies_controller_spec.rb`:**
+   - Completamos las especificaciones en `movies_controller_spec.rb`. Utilizamos `get` para simular el envío de un formulario a la acción `search_tmdb`.
+
+   ```ruby
+   describe MoviesController do
+     describe 'searching TMDb' do
+       it 'calls the model method that performs TMDb search' do
+         expect(Movie).to receive(:search_tmdb).with('search_terms')
+         get :search_tmdb, params: { search_terms: 'search_terms' }
+       end
+
+       it 'selects the Search Results template for rendering' do
+         # Espera que la plantilla de vista correcta sea renderizada
+         get :search_tmdb
+         expect(response).to render_template('search_tmdb_results')
+       end
+
+       it 'makes the TMDb search results available to that template' do
+         # Verifica que los resultados de búsqueda estén disponibles en la vista
+         allow(Movie).to receive(:search_tmdb).and_return(['result1', 'result2'])
+         get :search_tmdb
+         expect(assigns(:search_results)).to eq(['result1', 'result2'])
+       end
+     end
+   end
+   ```
+![](/imagenes/13.png)
+5. **Ejecutar las Pruebas:**
+   - Ejecutamos las pruebas con `bundle exec rspec`.
+   - Asegúrate de que todas las pruebas pasen antes de continuar con la implementación adicional.
+![En este caso no agregmos ejemplos](/imagenes/14.png)  
+### Paso 2: Lograr que se apruebe la primera especificación
+
