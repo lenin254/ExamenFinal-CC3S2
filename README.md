@@ -69,13 +69,44 @@ end
     end
    ```
    Aqui podemos ver como se implemento el metodo ademas que verifica si `username` esta presente y cumpla los reuqisitos que me indico en la pregunta.  
-   Si no cumple se agrega un mensaje de error que tiene una descripcion sobre porque fallo la validacion.
+   Si no cumple se agrega un mensaje de error que tiene una descripcion sobre porque fallo la validacion.  
+
 3. **Recuerda, los filtros nos ayudan a verificar si ciertas condiciones se cumplen antes de permitir que se ejecute una acción del controlador. Para el modelo de User, digamos que queremos verificar si @user era administrador de todos los métodos en AdminController. Completa el método before_filter:check_admin a continuación que verifica si el campo de administrador en @user es verdadero. De lo contrario, redirija a la página admin_login con un mensaje que indica acceso restringido.**
 ```ruby
 class AdminController < ApplicationController
   	        before_filter :check_admin
       # Completa el codigo
 ```
+Agregando un metodo `check_admin` de la siguiente manera: 
+```ruby
+class AdminController < ApplicationController
+            before_filter :check_admin
+  #completar codigo
+  def check_admin
+    unless @user && @user.admin?
+      flash[:alert] = "Acceso restringido. Debes ser un administrador para realizar esta acción."
+      redirect_to admin_login_path
+    end
+  end
+end
+```
+En este nuevo código:
+- `before_action :check_admin` se asegura de que el mtodo `check_admin` se ejecute antes de cualquier accion en `AdminController`.
+- `check_admin` es un metodo que comprueba si `@user` está presente y si el campo `admin` es verdadero. Si no es asi, se establece un mensaje de alerta en el objeto `flash` y se redirige a la página `admin_login`.  
+
+4. AJAX (JavaScript y XML asíncronos) es un grupo de herramientas y técnicas para el desarrollo de aplicaciones web asíncronas. El objetivo de AJAX es que la comunicación entre una aplicación y el servidor de datos (es decir, solicitudes HTTP) no interfiera con la experiencia, la visualización y el comportamiento de la aplicación. A continuación, se te proporciona un formulario que simula el inicio de sesión. Comprueba si la combinación de nombre de usuario y contraseña funciona junto con la cuenta, si la hay. Para hacer eso, queremos que se realice una solicitud HTTP POST cuando se envíe este formulario. Escribe tu solución con jQuery y comenta dónde debe ubicarse la función de devolución de llamada (callback). Comprueba tus resultados.
+```javascript
+<form method="POST" id="foo">
+<input type="text" class="user" />
+<input type="password" class="pass" />
+<input type="button" value="Log␣in" id="onSubmit" />
+</form>
+$("#onSubmit").click(function() {
+# Tu codigo
+})
+```
+
+
 
 
 
