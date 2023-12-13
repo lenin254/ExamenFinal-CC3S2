@@ -108,5 +108,16 @@ $("#onSubmit").click(function() {
 5. ¿Cuándo deberías utilizar la metaprogramación basada en eval en lugar de la metaprogramación basada en bloques?.
 
 
+## Parte 2. Pruebas
+Agregamos las gemas mencionadas al `gemfile` y volvemos a mandar el `bundle install`  
+![](/imagenes/7.png)  
+Luego ejecutamos `rails generate rspec:install`  
+![](/imagenes/8.png)  
+Editamos el archivo `spec/rails_helper.rb` para incluir `require 'byebug'`  
+![](/imagenes/9.png)  
+Ejecuta el paquete exec guard init rspec para configurar los archivos necesarios para Guard, lo que dará como resultado la creación de un nuevo Guardfile. Agrega ese archivo a tu repositorio.  
+Configura la base de datos con el comando habitual  
+Ejecuta el servidor para mostrar que todo este bien.  
+![](/imagenes/10.png)  
 
-
+### Paso 1: Escribiendo una nueva vista
