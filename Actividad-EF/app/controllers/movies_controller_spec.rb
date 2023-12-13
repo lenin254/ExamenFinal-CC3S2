@@ -3,7 +3,10 @@ describe MoviesController do
       it 'calls the model method that performs TMDb search' do
         expect(Movie).to receive(:search_tmdb).with('search_terms')
         get :search_tmdb, params: { search_terms: 'search_terms' }
+        get :search_tmdb, params: { search_terms: 'hardware' }
       end
+
+
 
       it 'selects the Search Results template for rendering' do
         # Espera que la plantilla de vista correcta sea renderizada

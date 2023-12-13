@@ -193,3 +193,21 @@ Ejecuta el servidor para mostrar que todo este bien.
 *En este caso no agregmos ejemplos*
 ### Paso 2: Lograr que se apruebe la primera especificación
 
+primero actualizamos las especificaciones en movies_controller_spec.rb:
+```ruby
+it 'calls the model method that performs TMDb search' do
+  get :search_tmdb, params: { search_terms: 'hardware' }
+end
+```
+Luego nos asegurmos que moviescontroller tenga una metodo search_tmdb, cosa que ya agregamos en la 1.
+finalmente editamos `config/routes.rb` , para que tenga la ruta respectiva.
+```ruby
+Rottenpotatoes::Application.routes.draw do
+    resources :movies
+    # map '/' to be a redirect to '/movies'
+    root :to => redirect('/movies')
+    get 'search_tmdb', to: 'movies#search_tmdb'
+  end
+```
+Y ejecutamos pruebas.
+### Paso 3: Más comportamientos de controlador (3 puntos)
