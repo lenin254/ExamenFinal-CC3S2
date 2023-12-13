@@ -53,9 +53,9 @@ class User < ActiveRecord::Base
     validate :username_format
 end
 ```
-   1. **¿Qué pasa si tenemos @user sin nombre de usuario y llamamos a @user.valid? ¿Qué guardará @user.save**:  Si tenemos `@user` sin nombre de usuario y llamamos como dice la pregunta a `@use.valid?` El resultado que nos presentara va a ser `false`. Esto es por la razon que la validacion exige que el campo `username` no este vacio.. Si intentamos guardar @user con `@user.save` la operacion fallara y devolvera `false`, esto porque no se permite guardar registros en la Base de Datos si no cumple la validacion que se menciono.
+   I. **¿Qué pasa si tenemos @user sin nombre de usuario y llamamos a @user.valid? ¿Qué guardará @user.save**:  Si tenemos `@user` sin nombre de usuario y llamamos como dice la pregunta a `@use.valid?` El resultado que nos presentara va a ser `false`. Esto es por la razon que la validacion exige que el campo `username` no este vacio.. Si intentamos guardar @user con `@user.save` la operacion fallara y devolvera `false`, esto porque no se permite guardar registros en la Base de Datos si no cumple la validacion que se menciono.
    
-   2. **Implementa username_format. Para los propósitos, un nombre de usuario comienza 	con una letra y tiene como máximo 10 caracteres de largo. Recuerda, las validaciones 	personalizadas agregan un mensaje a la colección de errores.**:  Para implementar `username_format` como me menciona, podemos añadirla con un metodo de validacion para el modelo `user` de esta manera:
+   II. **Implementa username_format. Para los propósitos, un nombre de usuario comienza 	con una letra y tiene como máximo 10 caracteres de largo. Recuerda, las validaciones 	personalizadas agregan un mensaje a la colección de errores.**:  Para implementar `username_format` como me menciona, podemos añadirla con un metodo de validacion para el modelo `user` de esta manera:
    ```ruby
     class User < ActiveRecord::Base
     validates :username, presence: true
@@ -70,5 +70,12 @@ end
    ```
    Aqui podemos ver como se implemento el metodo ademas que verifica si `username` esta presente y cumpla los reuqisitos que me indico en la pregunta.  
    Si no cumple se agrega un mensaje de error que tiene una descripcion sobre porque fallo la validacion.
+3. **Recuerda, los filtros nos ayudan a verificar si ciertas condiciones se cumplen antes de permitir que se ejecute una acción del controlador. Para el modelo de User, digamos que queremos verificar si @user era administrador de todos los métodos en AdminController. Completa el método before_filter:check_admin a continuación que verifica si el campo de administrador en @user es verdadero. De lo contrario, redirija a la página admin_login con un mensaje que indica acceso restringido.**
+```ruby
+class AdminController < ApplicationController
+  	        before_filter :check_admin
+      # Completa el codigo
+```
+
 
 
